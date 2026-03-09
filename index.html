@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-MO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPETS 澳寵 - 寵物領養</title>
+    <style>
+        :root {
+            --primary-color: #F48A37;
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --bg-white: #ffffff;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-family); color: var(--text-dark); line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+
+        .hover-zoom { transition: transform 0.3s ease-in-out; }
+        .hover-zoom:hover { transform: scale(1.08); }
+
+        /* --- 導航列與 Logo 樣式 --- */
+        header { 
+            background-color: var(--primary-color); 
+            color: var(--text-light); 
+            padding: 1.5rem 5%; 
+        }
+
+        .header-container {
+            width: 100%;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .logo { 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+        }
+
+        .logo-circle-wrapper {
+            width: 40px; 
+            height: 40px;
+            background-color: var(--bg-white); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; 
+        }
+
+        .logo-circle-wrapper img {
+            width: 70%; 
+            height: 70%;
+            object-fit: contain; 
+        }
+
+        .nav-links { 
+            display: flex; 
+            gap: 2rem; 
+            list-style: none; 
+        }
+        .nav-links a:hover { opacity: 0.8; }
+
+        /* --- 首屏 Hero 區域 --- */
+        .hero { 
+            background-color: var(--primary-color); 
+            color: var(--text-light); 
+            padding: 5rem 5%; 
+        }
+
+        .hero-container {
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            align-items: center; 
+            gap: 2rem;
+            max-width: 1200px; 
+            margin: 0 auto;
+        }
+
+        .hero-text h1 { 
+            font-size: 7rem; 
+            line-height: 1.05; 
+            margin-bottom: 1rem; 
+            font-weight: 900; 
+            letter-spacing: 2px;
+        }
+        
+        .hero-image { display: flex; justify-content: center; }
+        
+        .shape-img { 
+            width: 100%; 
+            max-width: 450px; 
+            aspect-ratio: 1/1; 
+            object-fit: cover; 
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; 
+        }
+
+        /* --- 本周推薦區域 --- */
+        .recommendations { text-align: center; }
+        
+        .section-title { font-size: 2rem; margin: 1rem 0 3rem 0; color: var(--text-dark); }
+        
+        .grid-3-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; padding: 0 5%; max-width: 1200px; margin: 0 auto; }
+        
+        .pet-card { padding: 1rem; display: flex; flex-direction: column; align-items: center; }
+        .pet-card img { 
+            width: 180px; 
+            height: 180px; 
+            object-fit: cover; 
+            border-radius: 40px; 
+            margin-bottom: 1rem; 
+        }
+        .pet-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .pet-card p { font-size: 0.85rem; color: #666; }
+
+        .recommendations-bottom { background-color: var(--primary-color); color: var(--text-light); padding: 3rem 0; margin-top: 2rem; }
+        .recommendations-bottom .pet-card p, .recommendations-bottom .pet-card h3 { color: var(--text-light); }
+        .btn-more { background-color: var(--bg-white); color: var(--primary-color); border: none; padding: 10px 30px; border-radius: 20px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 3rem; transition: all 0.3s ease; }
+        .btn-more:hover { background-color: #f0f0f0; transform: translateY(-2px); }
+
+        /* --- 關於我們區域 --- */
+        .about { padding: 5rem 5% 2rem 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .about-text h2 { font-size: 2rem; margin-bottom: 1.5rem; }
+        .about-text p { margin-bottom: 2rem; color: #555; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center; }
+        .stat-item h4 { color: var(--primary-color); font-size: 1.5rem; }
+        .stat-item span { font-size: 0.9rem; color: #666; }
+        .about-image img { width: 100%; border-radius: 20px; }
+
+        /* --- 服務特色區域 --- */
+        .services { padding: 1rem 5% 4rem 5%; text-align: center; max-width: 1200px; margin: 0 auto; }
+        .grid-4-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .service-card { display: flex; flex-direction: column; align-items: center; }
+        .icon-circle { width: 80px; height: 80px; background-color: var(--primary-color); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 1rem; }
+        .icon-circle span { color: white; font-size: 2rem; }
+        .service-card h3 { margin-bottom: 0.5rem; }
+        .service-card p { font-size: 0.85rem; color: #666; }
+
+        /* --- 頁腳 --- */
+        footer { background-color: var(--primary-color); color: var(--text-light); padding: 4rem 5% 1rem 5%; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto 3rem auto; }
+        .footer-col h3 { margin-bottom: 1.5rem; font-size: 1.2rem; }
+        .footer-col p, .footer-col li { font-size: 0.9rem; margin-bottom: 0.8rem; opacity: 0.9; }
+        .footer-col ul { list-style: none; }
+        .footer-icons { display: flex; gap: 12px; margin-top: 1.5rem; }
+        .icon-box { width: 36px; height: 36px; background-color: var(--bg-white); border-radius: 10px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.3s ease; color: var(--primary-color); }
+        .icon-box:hover { transform: translateY(-4px); }
+        .icon-box svg { width: 20px; height: 20px; fill: currentColor; }
+        .copyright { text-align: center; font-size: 0.8rem; opacity: 0.8; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.2); }
+
+        /* --- 響應式適配 (手機版) --- */
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; text-align: center; gap: 1rem; } 
+            .nav-links { display: none; } 
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-text h1 { font-size: 4.5rem; } 
+            .about { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-circle-wrapper">
+                    <img src="images/logo.png" alt="Logo">
+                </div>
+                <span>MPETS</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">首頁</a></li>
+                <li><a href="adopt.html">寵物領養</a></li>
+                <li><a href="process.html">領養流程</a></li>
+                <li><a href="contact.html">聯繫我們</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-text">
+                <h1>MPETS<br>澳寵</h1>
+            </div>
+            <div class="hero-image">
+                <img src="images/hero-cat.png" alt="可愛橘貓" class="shape-img hover-zoom">
+            </div>
+        </div>
+    </section>
+
+    <section class="recommendations">
+        <h2 class="section-title">本周推薦</h2>
+        <div class="grid-3-col">
+            <div class="pet-card">
+                <img src="images/lele.png" alt="樂樂" class="hover-zoom">
+                <h3>樂樂</h3>
+                <p>3歲，公，已絕育。性格溫和，親人，狗狗喜歡被撫摸，期待溫暖的家。</p>
+            </div>
+            <div class="pet-card">
+                <img src="images/wangwang.png" alt="旺旺" class="hover-zoom">
+                <h3>旺旺</h3>
+                <p>1歲，公，白毛配黃斑。活潑好動的小天使，喜歡叼著玩具跑，適合有院子的家庭。</p>
+            </div>
+            <div class="pet-card">
+                <img src="images/xiaohei.png" alt="小黑" class="hover-zoom">
+                <h3>小黑</h3>
+                <p>4個月，母，黑色短毛貓。主人家中新生兒對貓毛過敏，身體狀況良好，性格乖巧。</p>
+            </div>
+        </div>
+
+        <div class="recommendations-bottom">
+            <div class="grid-3-col">
+                <div class="pet-card">
+                    <img src="images/lucky.png" alt="Lucky" class="hover-zoom">
+                    <h3>Lucky</h3>
+                    <p>5個月，公，狸花折耳貓。流浪時被我們的志願者救下的小貓，已打疫苗，身體狀況良好。</p>
+                </div>
+                <div class="pet-card">
+                    <img src="images/happy.png" alt="Happy" class="hover-zoom">
+                    <h3>Happy</h3>
+                    <p>2歲，公，黑白奶牛貓。小區群護阿姨救助的流浪牛貓，親近人類，性格活潑。</p>
+                </div>
+                <div class="pet-card">
+                    <img src="images/xiangxiang.png" alt="香香" class="hover-zoom">
+                    <h3>香香</h3>
+                    <p>3歲，母，白色貴賓犬。原主人因出國無法繼續飼養，狗狗受過訓練，習慣良好。</p>
+                </div>
+            </div>
+            <button class="btn-more">查看更多寵物</button>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="about-text">
+            <h2>關於MPETS</h2>
+            <p>MPETS成立于2025年，是一家專注於流浪動物救助與領養服務的非營利組織。我們致力於為流浪動物尋找溫暖的家，為有愛心的家庭提供健康可愛的寵物伴侶。</p>
+            <p>我們的使命是減少流浪動物的數量，提高動物福利，促進人與動物的和諧相處。每一隻寵物在進入領養程序前，都會接受全面的健康檢查和必要的醫療護理。</p>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h4>1.0K+</h4>
+                    <span>成功領養</span>
+                </div>
+                <div class="stat-item">
+                    <h4>500+</h4>
+                    <span>幸福家庭</span>
+                </div>
+                <div class="stat-item">
+                    <h4>50+</h4>
+                    <span>合作機構</span>
+                </div>
+            </div>
+        </div>
+        <div class="about-image">
+            <img src="images/about-pets.png" alt="貓狗群像" class="hover-zoom">
+        </div>
+    </section>
+
+    <section class="services">
+        <h2 class="section-title">服務特色</h2>
+        <div class="grid-4-col">
+            <div class="service-card">
+                <div class="icon-circle"><span>🏥</span></div>
+                <h3>健康保障</h3>
+                <p>所有寵物都經過專業全面體檢，確保健康狀況良好，並提供完整的醫療記錄。</p>
+            </div>
+            <div class="service-card">
+                <div class="icon-circle"><span>❤️</span></div>
+                <h3>愛心配對</h3>
+                <p>根據家庭情況和寵物性格進行科學配對，確保最佳的領養匹配度。</p>
+            </div>
+            <div class="service-card">
+                <div class="icon-circle"><span>📞</span></div>
+                <h3>終身服務</h3>
+                <p>提供領養後的跟蹤回訪和專業資訊，解決您在養寵過程中遇到的問題。</p>
+            </div>
+            <div class="service-card">
+                <div class="icon-circle"><span>👩‍🏫</span></div>
+                <h3>專業指導</h3>
+                <p>為新手主人提供寵物照顧培訓、行為校正、餵養、醫療等專業指導。</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>MPETS澳寵</h3>
+                <p>致力於為每一隻毛孩子尋找溫暖的家，讓愛傳遞，讓生命更美好。</p>
+                <div class="footer-icons">
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 2A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4h-8.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.25-2.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg></div>
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></div>
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M8.5 3C4.36 3 1 5.91 1 9.5c0 2.05 1.15 3.87 2.92 5.06-.2.78-.65 2.18-.69 2.32-.05.15.06.27.2.22 1.83-.73 3.01-1.35 3.01-1.35 1.05.51 2.56.91 4.56.91 2.34 0 4.41-1.01 5.71-2.57 1.04-.51 1.79-1.39 1.79-2.59 0-3.59-3.36-6.5-7.5-6.5zm0 11c-2.02 0-3.92-.37-4.88-.84l-1.38.56.32-1.2c-1.33-1.04-2.06-2.45-2.06-4.02C2.5 5.56 5.19 3.5 8.5 3.5s6 2.06 6 4.5-2.69 6-6 6zm7.5-6.5c-2.08 0-3.95 1.1-4.93 2.76 3.16.57 5.43 3.02 5.43 5.74 0 1.2-.59 2.27-1.55 3.1.58.58 1.48 1.12 2.94 1.74.12.05.2.14.2.27s-.18.25-.36.25c-.2 0-1.44-.06-3.21-1.24-.95.34-1.95.5-2.92.5-.23 0-.46-.02-.69-.05 1.19 1.25 3.2 2.03 5.44 2.03 3.55 0 6.5-2.46 6.5-5.5s-2.95-5.5-6.5-5.5zM6 6c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm5 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1z"/></svg></div>
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>快速鏈接</h3>
+                <ul>
+                    <li><a href="index.html">首頁</a></li>
+                    <li><a href="adopt.html">寵物領養</a></li>
+                    <li><a href="process.html">領養流程</a></li>
+                    <li><a href="contact.html">聯繫我們</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>聯系信息</h3>
+                <p>地址：澳門特別行政區MPETS</p>
+                <p>電話：61888888</p>
+                <p>Email：info@mpets.mo</p>
+                <p>工作時間：9:00-18:00</p>
+            </div>
+            <div class="footer-col">
+                <h3>服務承諾</h3>
+                <ul>
+                    <li>健康保障</li>
+                    <li>專業配對</li>
+                    <li>終身服務</li>
+                    <li>愛心回訪</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 MPETS MACAU. 保留所有權利 | 讓愛傳遞
+        </div>
+    </footer>
+
+</body>
+</html>

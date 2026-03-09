@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-MO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聯繫我們 - MPETS 澳寵</title>
+    <style>
+        :root {
+            --primary-color: #F48A37;
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-family); color: var(--text-dark); line-height: 1.6; background-color: var(--bg-white); }
+        a { text-decoration: none; color: inherit; }
+
+        /* --- 導航列與 Logo --- */
+        header { background-color: var(--primary-color); color: var(--text-light); padding: 1.5rem 5%; }
+        .header-container { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: bold; display: flex; align-items: center; gap: 12px; }
+        .logo-circle-wrapper { width: 40px; height: 40px; background-color: var(--bg-white); border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .logo-circle-wrapper img { width: 70%; height: 70%; object-fit: contain; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a:hover { opacity: 0.8; }
+
+        /* --- 區塊背景 --- */
+        .section-orange { background-color: var(--primary-color); padding: 4rem 5%; }
+        .section-white { background-color: var(--bg-white); padding: 4rem 5%; }
+        
+        .content-container { max-width: 1000px; margin: 0 auto; }
+
+        /* --- 頂部四大聯絡卡片 --- */
+        .top-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .top-card {
+            background-color: var(--bg-white);
+            border-radius: 12px;
+            padding: 2.5rem 1rem;
+            text-align: center;
+            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+        }
+        .top-card svg { width: 45px; height: 45px; fill: #444; margin-bottom: 0.5rem; }
+        .top-card h3 { font-size: 1.2rem; color: var(--text-dark); }
+        .top-card p { color: #666; font-size: 0.9rem; line-height: 1.5; }
+
+        /* --- 地圖與交通指南 --- */
+        .map-section-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 2rem;
+        }
+        .map-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .transport-card {
+            background-color: var(--bg-white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+        }
+        .transport-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .transport-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .transport-item svg { width: 30px; height: 30px; flex-shrink: 0; }
+        .transport-item h4 { font-size: 1rem; margin-bottom: 0.2rem; }
+        .transport-item p { font-size: 0.85rem; color: #666; }
+
+        /* --- 留言表單區塊 --- */
+        .form-card {
+            background-color: var(--bg-white);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+            box-shadow: inset 0 0 0 1px #eee; /* 內邊框效果 */
+            margin-top: 2rem;
+        }
+        .form-title {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .full-width { grid-column: span 2; }
+        
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .form-group label { font-weight: bold; font-size: 0.95rem; }
+        .required { color: red; margin-left: 3px; }
+        
+        input[type="text"], input[type="email"], input[type="tel"], textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input:focus, textarea:focus { border-color: var(--primary-color); }
+        textarea { resize: vertical; min-height: 120px; }
+
+        .checkbox-group { display: flex; align-items: center; gap: 10px; font-weight: bold; cursor: pointer; margin-top: 1rem; }
+        .checkbox-group input { width: 18px; height: 18px; cursor: pointer; accent-color: var(--primary-color); }
+        .privacy-link { color: var(--primary-color); text-decoration: none; }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .btn {
+            padding: 10px 40px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+        .btn-outline:hover { background-color: #fff6ee; }
+        
+        .btn-solid {
+            background-color: var(--primary-color);
+            color: white;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 4px 10px rgba(244, 138, 55, 0.3);
+        }
+        .btn-solid:hover { background-color: #d66a1f; border-color: #d66a1f; }
+
+        /* --- 頁腳 --- */
+        footer { background-color: var(--primary-color); color: var(--text-light); padding: 4rem 5% 1rem 5%; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto 3rem auto; }
+        .footer-col h3 { margin-bottom: 1.5rem; font-size: 1.2rem; }
+        .footer-col p, .footer-col li { font-size: 0.9rem; margin-bottom: 0.8rem; opacity: 0.9; }
+        .footer-col ul { list-style: none; }
+        .footer-icons { display: flex; gap: 12px; margin-top: 1.5rem; }
+        .icon-box { width: 36px; height: 36px; background-color: var(--bg-white); border-radius: 10px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.3s ease; color: var(--primary-color); }
+        .icon-box:hover { transform: translateY(-4px); }
+        .icon-box svg { width: 20px; height: 20px; fill: currentColor; }
+        .copyright { text-align: center; font-size: 0.8rem; opacity: 0.8; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.2); }
+
+        /* --- 手機版適配 --- */
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; text-align: center; gap: 1rem; }
+            .nav-links { display: none; }
+            .map-section-grid { grid-template-columns: 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+            .form-card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-circle-wrapper">
+                    <img src="images/logo.png" alt="Logo">
+                </div>
+                <span>MPETS</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">首頁</a></li>
+                <li><a href="adopt.html">寵物領養</a></li>
+                <li><a href="process.html">領養流程</a></li>
+                <li><a href="contact.html">聯繫我們</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="section-orange">
+        <div class="content-container">
+            
+            <div class="top-cards-grid">
+                <div class="top-card">
+                    <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                    <h3>電話咨詢</h3>
+                    <p>61888888<br>工作時間：9:00-18:00</p>
+                </div>
+                <div class="top-card">
+                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <h3>郵件聯絡</h3>
+                    <p>info@mpets.mo<br>我們會在24小時內服務</p>
+                </div>
+                <div class="top-card">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    <h3>實地探訪</h3>
+                    <p>澳門特別行政區聖方濟各堂區<br>路環郊野公園MPETS</p>
+                </div>
+                <div class="top-card">
+                    <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4s1.79-4 4-4h.71C7.37 7.69 9.48 6 12 6c3.04 0 5.5 2.46 5.5 5.5v.5H19c1.66 0 3 1.34 3 3s-1.34 3-3 3z"/></svg>
+                    <h3>在線客服</h3>
+                    <p>工作時間內即時回復</p>
+                </div>
+            </div>
+
+            <div class="map-section-grid">
+                <img src="images/map.png" alt="MPETS 位置地圖" class="map-image">
+                
+                <div class="transport-card">
+                    <div class="transport-title">交通指南</div>
+                    
+                    <div class="transport-item">
+                        <svg viewBox="0 0 24 24" fill="#d32f2f"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                        <div>
+                            <h4>自駕</h4>
+                            <p>提供免費停車位，導航搜索 "MPETS"。</p>
+                        </div>
+                    </div>
+
+                    <div class="transport-item">
+                        <svg viewBox="0 0 24 24" fill="#455a64"><path d="M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1.5-6H6V6h12v5z"/></svg>
+                        <div>
+                            <h4>巴士</h4>
+                            <p>51路、N3路、26A路、25路、26路到連貫公路大廈站，隨後步行100米即可到達。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section-white">
+        <div class="content-container">
+            <form action="#" method="POST" class="form-card">
+                <div class="form-title">留言咨詢</div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>姓名<span class="required">*</span></label>
+                        <input type="text" placeholder="請輸入您的真實姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label>手機號碼<span class="required">*</span></label>
+                        <input type="tel" placeholder="請輸入您的手機號碼" required>
+                    </div>
+                    <div class="form-group">
+                        <label>email<span class="required">*</span></label>
+                        <input type="email" placeholder="請輸入您的郵箱地址" required>
+                    </div>
+                    <div class="form-group">
+                        <label>咨詢問題</label>
+                        <input type="text" placeholder="請輸入您的咨詢問題">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>詳細內容<span class="required">*</span></label>
+                        <textarea placeholder="請詳細描述您的問題或需求，我們會盡快回復您" required></textarea>
+                    </div>
+                </div>
+
+                <label class="checkbox-group">
+                    <input type="checkbox" required>
+                    我已閱讀並同意<a href="#" class="privacy-link">隱私政策</a>
+                </label>
+
+                <div class="button-group">
+                    <button type="reset" class="btn btn-outline">重置</button>
+                    <button type="submit" class="btn btn-solid">提交</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>MPETS澳寵</h3>
+                <p>致力於為每一隻毛孩子尋找溫暖的家，讓愛傳遞，讓生命更美好。</p>
+                <div class="footer-icons">
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 2A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4h-8.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.25-2.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg></div>
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></div>
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M8.5 3C4.36 3 1 5.91 1 9.5c0 2.05 1.15 3.87 2.92 5.06-.2.78-.65 2.18-.69 2.32-.05.15.06.27.2.22 1.83-.73 3.01-1.35 3.01-1.35 1.05.51 2.56.91 4.56.91 2.34 0 4.41-1.01 5.71-2.57 1.04-.51 1.79-1.39 1.79-2.59 0-3.59-3.36-6.5-7.5-6.5zm0 11c-2.02 0-3.92-.37-4.88-.84l-1.38.56.32-1.2c-1.33-1.04-2.06-2.45-2.06-4.02C2.5 5.56 5.19 3.5 8.5 3.5s6 2.06 6 4.5-2.69 6-6 6zm7.5-6.5c-2.08 0-3.95 1.1-4.93 2.76 3.16.57 5.43 3.02 5.43 5.74 0 1.2-.59 2.27-1.55 3.1.58.58 1.48 1.12 2.94 1.74.12.05.2.14.2.27s-.18.25-.36.25c-.2 0-1.44-.06-3.21-1.24-.95.34-1.95.5-2.92.5-.23 0-.46-.02-.69-.05 1.19 1.25 3.2 2.03 5.44 2.03 3.55 0 6.5-2.46 6.5-5.5s-2.95-5.5-6.5-5.5zM6 6c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm5 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1z"/></svg></div>
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>快速鏈接</h3>
+                <ul>
+                    <li><a href="index.html">首頁</a></li>
+                    <li><a href="adopt.html">寵物領養</a></li>
+                    <li><a href="process.html">領養流程</a></li>
+                    <li><a href="contact.html">聯繫我們</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>聯系信息</h3>
+                <p>地址：澳門特別行政區MPETS</p>
+                <p>電話：61888888</p>
+                <p>Email：info@mpets.mo</p>
+                <p>工作時間：9:00-18:00</p>
+            </div>
+            <div class="footer-col">
+                <h3>服務承諾</h3>
+                <ul>
+                    <li>健康保障</li>
+                    <li>專業配對</li>
+                    <li>終身服務</li>
+                    <li>愛心回訪</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 MPETS MACAU. 保留所有權利 | 讓愛傳遞
+        </div>
+    </footer>
+
+</body>
+</html>

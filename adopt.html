@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-MO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寵物領養申請 - MPETS 澳寵</title>
+    <style>
+        :root {
+            --primary-color: #F48A37;
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --bg-white: #ffffff;
+            --bg-offwhite: #fafafa;
+            --border-color: #e0e0e0;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-family); color: var(--text-dark); line-height: 1.6; background-color: var(--bg-white); }
+        a { text-decoration: none; color: inherit; }
+
+        /* --- 導航列與 Logo 樣式 --- */
+        header { 
+            background-color: var(--primary-color); 
+            color: var(--text-light); 
+            padding: 1.5rem 5%; 
+        }
+
+        .header-container {
+            width: 100%;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .logo { 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+        }
+
+        .logo-circle-wrapper {
+            width: 40px; 
+            height: 40px;
+            background-color: var(--bg-white); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; 
+        }
+
+        .logo-circle-wrapper img {
+            width: 70%; 
+            height: 70%;
+            object-fit: contain; 
+        }
+
+        .nav-links { 
+            display: flex; 
+            gap: 2rem; 
+            list-style: none; 
+        }
+        .nav-links a:hover { opacity: 0.8; }
+
+        /* --- 區塊背景顏色 --- */
+        .section-orange { background-color: var(--primary-color); padding: 4rem 5%; }
+        .section-white { background-color: var(--bg-white); padding: 4rem 5%; }
+        
+        /* --- 表單卡片共用樣式 --- */
+        .form-container { max-width: 800px; margin: 0 auto; }
+        .form-card {
+            background-color: var(--bg-white);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .form-header { margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
+        .form-header h2 { color: var(--primary-color); font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .form-header p { color: #666; font-size: 0.95rem; }
+
+        /* --- 表單格線佈局 --- */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .full-width { grid-column: span 2; }
+        
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .form-group label { font-weight: bold; font-size: 0.95rem; }
+        .required { color: red; margin-left: 3px; }
+        
+        input[type="text"], input[type="email"], input[type="tel"], textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input:focus, textarea:focus { border-color: var(--primary-color); }
+        textarea { resize: vertical; min-height: 120px; }
+
+        /* --- 領養協議區塊 --- */
+        .agreement-box {
+            background-color: #fff6ee;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .agreement-box h4 { margin-bottom: 1rem; color: var(--text-dark); }
+        .agreement-box ul { padding-left: 1.5rem; color: #555; font-size: 0.9rem; line-height: 1.8; }
+        .agreement-box li::marker { color: var(--primary-color); } 
+
+        .checkbox-group { display: flex; align-items: center; gap: 10px; font-weight: bold; cursor: pointer; }
+        .checkbox-group input { width: 18px; height: 18px; cursor: pointer; accent-color: var(--primary-color); }
+
+        /* --- 提交按鈕 --- */
+        .submit-btn-wrapper { text-align: center; margin-top: -1rem; }
+        .btn-submit {
+            background-color: #E87A2D;
+            color: white;
+            border: none;
+            padding: 12px 50px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .btn-submit:hover { transform: translateY(-2px); background-color: #d66a1f; }
+
+        /* --- 聯絡資訊卡片 --- */
+        .contact-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+        .contact-card {
+            background-color: var(--bg-white);
+            border-radius: 15px;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+        }
+        .contact-icon { width: 50px; height: 50px; fill: var(--primary-color); margin-bottom: 0.5rem; }
+        .contact-card h3 { font-size: 1.2rem; }
+        .contact-card p { color: #666; font-size: 0.9rem; }
+
+        /* --- 頁腳 (與首頁一致) --- */
+        footer { background-color: var(--primary-color); color: var(--text-light); padding: 4rem 5% 1rem 5%; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto 3rem auto; }
+        .footer-col h3 { margin-bottom: 1.5rem; font-size: 1.2rem; }
+        .footer-col p, .footer-col li { font-size: 0.9rem; margin-bottom: 0.8rem; opacity: 0.9; }
+        .footer-col ul { list-style: none; }
+        .footer-icons { display: flex; gap: 12px; margin-top: 1.5rem; }
+        .icon-box { width: 36px; height: 36px; background-color: var(--bg-white); border-radius: 10px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.3s ease; color: var(--primary-color); }
+        .icon-box:hover { transform: translateY(-4px); }
+        .icon-box svg { width: 20px; height: 20px; fill: currentColor; }
+        .copyright { text-align: center; font-size: 0.8rem; opacity: 0.8; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.2); }
+
+        /* --- 手機版適配 --- */
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; text-align: center; gap: 1rem; }
+            .nav-links { display: none; }
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+            .form-card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-circle-wrapper">
+                    <img src="images/logo.png" alt="Logo">
+                </div>
+                <span>MPETS</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">首頁</a></li>
+                <li><a href="adopt.html">寵物領養</a></li>
+                <li><a href="process.html">領養流程</a></li>
+                <li><a href="contact.html">聯繫我們</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <form action="#" method="POST">
+        <section class="section-orange">
+            <div class="form-container">
+                <div class="form-card">
+                    <div class="form-header">
+                        <h2>基本信息</h2>
+                        <p>請提供您的基本信息</p>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>姓名<span class="required">*</span></label>
+                            <input type="text" placeholder="請輸入您的真實姓名" required>
+                        </div>
+                        <div class="form-group">
+                            <label>年齡<span class="required">*</span></label>
+                            <input type="text" placeholder="請輸入您的真實年齡" required>
+                        </div>
+                        <div class="form-group">
+                            <label>手機號碼<span class="required">*</span></label>
+                            <input type="tel" placeholder="請輸入您的手機號碼" required>
+                        </div>
+                        <div class="form-group">
+                            <label>email<span class="required">*</span></label>
+                            <input type="email" placeholder="請輸入您的郵箱地址" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>詳細地址<span class="required">*</span></label>
+                            <input type="text" placeholder="請輸入您的詳細地址" required>
+                        </div>
+                        <div class="form-group">
+                            <label>職業</label>
+                            <input type="text" placeholder="請輸入您的職業">
+                        </div>
+                        <div class="form-group">
+                            <label>月收入</label>
+                            <input type="text" placeholder="請輸入您的月收入">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-white">
+            <div class="form-container">
+                <div class="form-card">
+                    <div class="form-header">
+                        <h2>寵物偏好</h2>
+                        <p>告訴我們您理想中的寵物夥伴</p>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>偏好類型<span class="required">*</span></label>
+                            <input type="text" placeholder="請輸入您的偏好類型" required>
+                        </div>
+                        <div class="form-group">
+                            <label>偏好體型</label>
+                            <input type="text" placeholder="請輸入您的偏好體型">
+                        </div>
+                        <div class="form-group">
+                            <label>偏好年齡</label>
+                            <input type="text" placeholder="請輸入您的偏好年齡">
+                        </div>
+                        <div class="form-group">
+                            <label>偏好性別</label>
+                            <input type="text" placeholder="請輸入您的偏好性別">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>領養原因<span class="required">*</span></label>
+                            <textarea placeholder="請告訴我們您想要領養寵物的原因，這將幫助我們更好地為您匹配合適的寵物" required></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-orange">
+            <div class="form-container">
+                <div class="form-card">
+                    <div class="form-header">
+                        <h2>確認提交</h2>
+                        <p>請閱讀並同意領養政策</p>
+                    </div>
+                    
+                    <div class="agreement-box">
+                        <h4>通過提交此申請，您同意以下條款：</h4>
+                        <ul>
+                            <li>我承諾將為被領養的寵物提供終生的愛護和照顧</li>
+                            <li>我理解寵物需要定期的醫療檢查和疫苗接種</li>
+                            <li>我同意在必要時接受家訪和後續跟蹤</li>
+                            <li>我承諾不會因為任何原因遺棄或轉讓寵物</li>
+                            <li>我理解如果無法繼續照顧寵物，會首先聯絡MPETS</li>
+                            <li>我提供的所有信息都是真實準確的</li>
+                        </ul>
+                    </div>
+
+                    <label class="checkbox-group">
+                        <input type="checkbox" required>
+                        我已閱讀並同意以上領養協議<span class="required">*</span>
+                    </label>
+                </div>
+                
+                <div class="submit-btn-wrapper">
+                    <button type="submit" class="btn-submit">提交申請</button>
+                </div>
+            </div>
+        </section>
+    </form>
+
+    <section class="section-white">
+        <div class="contact-cards">
+            <div class="contact-card">
+                <svg class="contact-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <h3>電話咨詢</h3>
+                <p>61888888<br>工作時間：9:00-18:00</p>
+            </div>
+            <div class="contact-card">
+                <svg class="contact-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <h3>郵件聯絡</h3>
+                <p>info@mpets.mo<br>我們會在24小時內回復</p>
+            </div>
+            <div class="contact-card">
+                <svg class="contact-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <h3>實地探訪</h3>
+                <p>澳門特別行政區路環石排灣郊野公園MPETS</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>MPETS澳寵</h3>
+                <p>致力於為每一隻毛孩子尋找溫暖的家，讓愛傳遞，讓生命更美好。</p>
+                <div class="footer-icons">
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 2A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4h-8.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.25-2.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg></div>
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></div>
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M8.5 3C4.36 3 1 5.91 1 9.5c0 2.05 1.15 3.87 2.92 5.06-.2.78-.65 2.18-.69 2.32-.05.15.06.27.2.22 1.83-.73 3.01-1.35 3.01-1.35 1.05.51 2.56.91 4.56.91 2.34 0 4.41-1.01 5.71-2.57 1.04-.51 1.79-1.39 1.79-2.59 0-3.59-3.36-6.5-7.5-6.5zm0 11c-2.02 0-3.92-.37-4.88-.84l-1.38.56.32-1.2c-1.33-1.04-2.06-2.45-2.06-4.02C2.5 5.56 5.19 3.5 8.5 3.5s6 2.06 6 4.5-2.69 6-6 6zm7.5-6.5c-2.08 0-3.95 1.1-4.93 2.76 3.16.57 5.43 3.02 5.43 5.74 0 1.2-.59 2.27-1.55 3.1.58.58 1.48 1.12 2.94 1.74.12.05.2.14.2.27s-.18.25-.36.25c-.2 0-1.44-.06-3.21-1.24-.95.34-1.95.5-2.92.5-.23 0-.46-.02-.69-.05 1.19 1.25 3.2 2.03 5.44 2.03 3.55 0 6.5-2.46 6.5-5.5s-2.95-5.5-6.5-5.5zM6 6c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm5 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1z"/></svg></div>
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>快速鏈接</h3>
+                <ul>
+                    <li><a href="index.html">首頁</a></li>
+                    <li><a href="adopt.html">寵物領養</a></li>
+                    <li><a href="#">領養流程</a></li>
+                    <li><a href="#">聯繫我們</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>聯系信息</h3>
+                <p>地址：澳門特別行政區MPETS</p>
+                <p>電話：61888888</p>
+                <p>Email：info@mpets.mo</p>
+                <p>工作時間：9:00-18:00</p>
+            </div>
+            <div class="footer-col">
+                <h3>服務承諾</h3>
+                <ul>
+                    <li>健康保障</li>
+                    <li>專業配對</li>
+                    <li>終身服務</li>
+                    <li>愛心回訪</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 MPETS MACAU. 保留所有權利 | 讓愛傳遞
+        </div>
+    </footer>
+
+</body>
+</html>
